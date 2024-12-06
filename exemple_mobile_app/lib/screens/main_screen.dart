@@ -12,7 +12,6 @@ class MainScreen extends StatefulWidget {
   _MainScreen createState() => _MainScreen();
 }
 
-//Set<Device?> devicesFound = Set();
 Device? _device;
 
 class _MainScreen extends State<MainScreen> {
@@ -21,7 +20,7 @@ class _MainScreen extends State<MainScreen> {
 
   final List<BluetoothDevice> scannedDevices = [];
   bool isScanning = false;
-  static const connectDeviceDialog = ['Connect']; // , 'Identify'
+  static const connectDeviceDialog = ['Connect'];
   late List<ScanResult> devices;
 
   final RepositoryBluetoothSingleton _repositorySingleton =
@@ -115,9 +114,6 @@ class _MainScreen extends State<MainScreen> {
                                   title: devices[index].device.platformName,
                                   rssi: devices[index].rssi);
                             });
-                        /*} else {
-                    return Container();
-                  } */
                       } else if (!dataSnapshot.hasData ||
                           dataSnapshot.data!.isEmpty) {
                         return const Center(child: Text('No devices found.'));
@@ -139,8 +135,6 @@ class _MainScreen extends State<MainScreen> {
               ],
             )),
       ),
-      //Text('Test'),
-      //)
     );
   }
 

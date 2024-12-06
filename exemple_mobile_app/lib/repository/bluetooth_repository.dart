@@ -72,28 +72,6 @@ class BluetoothRepository {
     return completer.future;
   }
 
-  /*
-    Future<bool> disconnect() async {
-    var completer = Completer<bool>();
-    if (_device != null) {
-      _subscriptionScanController?.pause();
-      await _device?.device.disconnect();
-      if (_device?.name != null) {
-        Analytics.setDisconnectDevice(_device!.name);
-      }
-      wifiModel.clear();
-      detailsModel.clear();
-      homeModel.clear();
-      services?.clear();
-      _device = null;
-      completer.complete(true);
-    } else {
-      completer.complete(false);
-    }
-    return completer.future;
-  }
-   */
-
   Future<List<BluetoothService>?> _fetchBLEServices() async {
     if (services == null || services?.isEmpty == true) {
       return services = await device?.device.discoverServices();
@@ -104,7 +82,6 @@ class BluetoothRepository {
 
   Future<Stream<String>> fetchDeviceName() async {
     Completer<bool> completer = Completer();
-    //checkDeviceConnected().whenComplete(() async {
     List<BluetoothService>? services = await _fetchBLEServices();
     var service = services?.firstWhere(
         (element) => element.uuid.toString() == Constants.configService);
@@ -119,7 +96,6 @@ class BluetoothRepository {
     }, onError: (error) {
       completer.completeError('setDeviceName finished with error');
     });
-    //});
     return connectedDeviceNameController.stream;
   }
 
@@ -161,16 +137,13 @@ class BluetoothRepository {
         var data = await rxCharacteristic?.read();
         if (data != null) {
           if (controllerNumber == 0) {
-            //String hexString =
-            //    data.map((e) => e.toRadixString(16).padLeft(2, '0')).join();
-            manufactureIDController
-                .add(makeHexString(data)); // 0x + värdet som är hexadecimalt
+            manufactureIDController.add(makeHexString(data));
           } else if (controllerNumber == 1) {
             productTypeController.add(makeHexString(data));
           } else if (controllerNumber == 2) {
             deviceNameController.add(utf8.decode(data));
           } else if (controllerNumber == 3) {
-            dmxAddressController.add(data); //int 16-bitars
+            dmxAddressController.add(data);
           } else if (controllerNumber == 4) {
             var mode = Mode.fromByteValue(data.first);
             deviceModeController.add(Mode.fromByteValue(data.first));
@@ -242,8 +215,6 @@ class BluetoothRepository {
         (element) => element.uuid.toString() == Constants.bleTxCharacteristic);
     var clearToSendCharacteristic = characteristics?.firstWhere((element) =>
         element.uuid.toString() == Constants.bleClearToSendCharacteristic);
-    //var rxCharacteristic = characteristics?.firstWhere(
-    //    (element) => element.uuid.toString() == Constants.bleRxCharacteristic);
     try {
       var dataFromRead = await clearToSendCharacteristic?.read();
       if (dataFromRead != null) {
@@ -295,11 +266,9 @@ class BluetoothRepository {
       subscription = device!.device.connectionState
           .listen((BluetoothConnectionState state) async {
         if (state == BluetoothConnectionState.disconnected) {
-          // reconnectToDevice();
           if (device != null) {
             try {
               await Future.delayed(const Duration(seconds: 3));
-              //await device!.device.connect();
               if (Platform.isAndroid) {
                 await device!.device.requestMtu(512);
               }
@@ -329,7 +298,6 @@ class BluetoothRepository {
     if (device != null) {
       try {
         await Future.delayed(const Duration(seconds: 3));
-        //await device!.device.connect();
         if (Platform.isAndroid) {
           await device!.device.requestMtu(512);
         }
@@ -359,16 +327,4 @@ class BluetoothRepository {
       return;
     }
   }
-  /*
-  void updateLabelFromRepo(String newLabel) {
-    modeNotifier.setLabel(newLabel);
-  }
-
-  void updateBytesValueFromRepo(int? newBytes) {
-    modeNotifier.setBytesValue(newBytes);
-  }
-
-  String getLabelFromRepo() {
-    return modeNotifier.label;
-  } */
 }

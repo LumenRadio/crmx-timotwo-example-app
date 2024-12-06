@@ -23,9 +23,9 @@ class Constants {
   static const List<int> GET_MANUFACTURER_ID = [0x00];
   static const List<int> GET_PRODUCT_TYPE = [0x02];
   static const List<int> GET_DEVICE_LABEL = [0x04];
-  static const List<int> SET_DEVICE_LABEL = [0x05]; // skickas med text i byte
+  static const List<int> SET_DEVICE_LABEL = [0x05];
   static const List<int> GET_MODE = [0x06];
   static const List<int> SET_MODE = [0x07];
   static const List<int> GET_DMX_ADDRESS = [0x08];
-  static const List<int> SET_DMX_ADDRESS = [0x09]; // skickas med text i byte
+  static const List<int> SET_DMX_ADDRESS = [0x09];
 }

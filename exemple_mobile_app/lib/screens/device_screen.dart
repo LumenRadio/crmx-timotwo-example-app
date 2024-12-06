@@ -28,11 +28,9 @@ class _DeviceScreen extends State<DeviceScreen> {
   bool loadingData = true;
   List<int> modes = [0, 1];
   String currentMode = '';
-  //Mode mode = Mode();
   final Mode _deviceMode =
       RepositoryBluetoothSingleton().getBluetoothRepository.deviceMode;
 
-  //State<DeviceScreen>
   @override
   void initState() {
     fetchDeviceData();
@@ -126,7 +124,6 @@ class _DeviceScreen extends State<DeviceScreen> {
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
                           'Product type: '),
-                      // Streambuilder
                       StreamBuilder<String>(
                           stream: RepositoryBluetoothSingleton()
                               .getBluetoothRepository
@@ -212,12 +209,6 @@ class _DeviceScreen extends State<DeviceScreen> {
                           builder: (context, dataSnapshot) {
                             if (dataSnapshot.hasData &&
                                 dataSnapshot.data != null) {
-                              print(
-                                  '!!! bytesvalue: ${dataSnapshot.data!.byteValue}');
-                              //Mode currentMode = Mode.fromByteValue(
-                              //    dataSnapshot.data.byteValue);
-                              //currentMode = dataSnapshot.data!.label.toString();
-
                               return Text(dataSnapshot.data!.label.toString(),
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
