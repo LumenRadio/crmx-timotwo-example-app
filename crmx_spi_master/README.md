@@ -1,24 +1,41 @@
 # Arduino SPI Master for CRMX TimoTwo
 
-Arduino example on how to implement SPI master for CRMX TimoTwo and controlling the Arduino via BLE interface of the TimoTwo.
+Arduino example on how to implement SPI master for CRMX TimoTwo and controlling the Arduino Due via BLE interface of the TimoTwo.
+
+## Getting Started
+
+Follow the [Arduino CLI - Installation](https://arduino.github.io/arduino-cli/1.1/installation/) guide for installing `arduino-cli` utility.
+
+Install Arduino Due Board Manager by running:
+
+```sh
+arduino-cli core install arduino:sam
+```
 
 ## How to use
 
 Connect your arduino to the TimoTwo's SPI interface (all five signals).
 
-## SPI Interface
+Compile and upload the sketch to Arduino Due by running:
 
-This document explains roughly how to reach the arduino via TimoTwo's BLE interface.
+```sh
+make PORT=/dev/<serial-port>
+```
 
-## Generic RXTX Service
+Monitor the communication on serial port by running:
 
-Arduino may be accessed via TimoTwo's BLE interface on `Generic RXTX Service`.
+```sh
+arduino-cli monitor --port /dev/<serial-port> --config 250000
 
-The `Generic RXTX Service` is documented [here](https://docs.lumenrad.io/timotwo/ble-interface/#generic-rxtx-data-service).
+```
 
-## SPI Commands
+## BLE and SPI Interface
 
-Arduino implements following commands handlers:
+Arduino may be accessed via TimoTwo's BLE interface on `Generic RXTX Service`. For more information, navigate to LumenRadio's official documentation [BLE interface - Generix RXTX data service](https://docs.lumenrad.io/timotwo/ble-interface/#generic-rxtx-data-service).
+
+### SPI Commands
+
+Arduino implements handlers for following commands:
 
 | Name                | Value |
 | ------------------- | ----- |
@@ -33,7 +50,7 @@ Arduino implements following commands handlers:
 | GET_DMX_ADDRESS     | 0x08  |
 | SET_DMX_ADDRESS     | 0x09  |
 
-## Default values
+### Default values
 
 Arduino will respond following values by default.
 
