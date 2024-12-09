@@ -1,0 +1,11 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+adafruit-bluefruitle = {ref = "master", git = "git+https://github.com/adafruit/Adafruit_Python_BluefruitLE.git"}
+
+[requires]
+python_version = "3.8"
+
